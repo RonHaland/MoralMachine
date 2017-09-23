@@ -2,11 +2,48 @@
 <html>
 <head>
   <script src="script.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <style>
+  .buttons{
+    clear:both;
+    padding: 20px
+  }
+  button{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  </style>
 </head>
 <body>
   <div id="form container">
     <form>
-      <label>Age: <input id="age" placeholder="age"></label>
+      <label>Age: <input type="number" id="age" placeholder="age" value=""></label>
+      <label>Gender: <select id="gender">
+          <option value="0">male</option>
+          <option value="1">female</option>
+      </select></label>
+      <label>Health: <select id="health">
+          <option value="1">healthy</option>
+          <option value="2" selected>neutral</option>
+          <option value="3">obese</option>
+      </select></label>
+      <label>Status: <select id="status">
+          <option value="1">rich</option>
+          <option value="2" selected>neutral</option>
+          <option value="3">poor</option>
+      </select></label>
+      <label>Passenger: <select id="passenger">
+          <option value="1">Yes</option>
+          <option value="0" selected>No</option>
+      </select></label>
+      <div class="buttons">
+        <button type="button" name="C" onclick="addPerson(0)">Add to Car</button>
+        <button type="button" name="A" onclick="addPerson(1)">Add to lane A</button>
+        <button type="button" name="B" onclick="addPerson(2)">Add to lane B</button>
+      </div>
+      <div class="buttons">
+        <button type="button" name="RunTest" onclick="chooseLane()">Let's Go!</button>
+      </div>
     </form>
   </div>
 </body>
