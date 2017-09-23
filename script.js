@@ -39,10 +39,10 @@ function Person(age, gender, health, status){
 var laneA = [], laneB = [], car = [];
 
 function addPerson(position){
-  var age = parseInt(document.getElementById('age').value;
-  var gender = parseInt(document.getElementById('gender').value;
-  var health = parseInt(document.getElementById('health').value;
-  var status = parseInt(document.getElementById('status').value;
+  var age = parseInt(document.getElementById('age').value);
+  var gender = parseInt(document.getElementById('gender').value);
+  var health = parseInt(document.getElementById('health').value);
+  var status = parseInt(document.getElementById('status').value);
   // Position: 1 = laneA, 2 = laneB, 3 = car (default)
   if(position === 1){
     laneA.push(new Person(age, gender, health, status));
