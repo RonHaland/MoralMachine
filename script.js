@@ -1,4 +1,5 @@
 function Person(age, gender, health, status){
+  this.id = Id++;
   this.age = age;
   this.gender = gender;
   this.health = health;
@@ -39,13 +40,14 @@ function Person(age, gender, health, status){
   };
 };
 
+var Id=0;
 var laneA = [], laneB = [], car = [];
 
 function addPerson(position){
   var age = parseInt(document.getElementById('age').value);
   if(age < 0)
     age = 0;
-  var gender = parseInt(document.getElementById('gender').value);
+  var gender = document.getElementById('gender').value;
   var health = parseInt(document.getElementById('health').value);
   var status = parseInt(document.getElementById('status').value);
   // Position: 1 = laneA, 2 = laneB, 3 = car (default)
@@ -56,20 +58,108 @@ function addPerson(position){
   } else {
     car.push(new Person(age, gender, health, status));
   }
+  displayPeople();
 };
 
 function chooseLane(){
   var totalA = 0, totalB = 0, totalCar = 0;
+  // 0 = Normal, 1 = Obstructed, 2 = Red, 3 = Green
+  var statusA = document.getElementById("laneAStatus").value;
+  var statusB = document.getElementById("laneBStatus").value;
   for(var i = 0; i < laneA.length;i++){
     totalA += laneA[i].sum();
+  }
+  if (statusA == 2){
+      totalA *= 0.7;
+  } else if (statusA == 3) {
+    totalA *= 1.2;
   }
   for(var i = 0; i < laneB.length;i++){
     totalB += laneB[i].sum();
   }
+  if (statusB == 2){
+      totalB *= 0.7;
+  }else if (statusB == 3) {
+    totalB *= 1.2;
+  }
   for(var i = 0; i < car.length;i++){
     totalCar += car[i].sum();
   }
-  console.log(totalA);
-  console.log(totalB);
-  console.log(totalCar);
+
+  // Score Checking
+  if (statusA == 1) { // A is blocked
+    totalCar *=0.7;
+    if (statusB == 1){ // A and B is blocked
+      console.log("Crashed A");
+    } else if (totalCar > totalB){    // only A is blocked and car has higher score
+      console.log("Ran over Lane B");
+    } else {                          // B has higher score
+      console.log("Crashed Lane A");
+    }
+  } else if (statusB == 1) { // B is blocked
+    if (totalCar > totalA){  // Car has higher score
+      console.log("Ran over Lane A");
+    } else {                 // A has higher score
+      console.log("Crashed Lane B");
+    }
+  } else {                  // both lanes open
+    totalB *= 1.1;
+    if (totalA > totalB) {  // A has higher score
+      console.log("Ran over Lane B");
+    } else {                // B has higher score
+      console.log("Ran over Lane A");
+    }
+  }
+  console.log("Lane A:  " + totalA);
+  console.log("Lane B:  " + totalB);
+  console.log("Car:     " + totalCar);
 };
+function toColor(numb){
+  switch (numb) {
+    case "0":
+      return "#AAAAAA";
+      break;
+    case "1":
+      return "#555555";
+      break;
+    case "2":
+      return "#CC0000";
+      break;
+    case "3":
+      return "#00AA00";
+      break;
+    default:
+      return "#AAAAAA";
+
+  }
+}
+
+function displayPeople(){
+
+  HTML = "<div class='table'><h2>Lane A</h2><table id='tableA' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
+  for(i=0; i<laneA.length; i++) {
+    HTML+="<tr><td>"+laneA[i].id+"</td><td>"+laneA[i].age+"</td><td>"+laneA[i].gender+"</td><td><button>delete</button></td></tr>"
+  }
+  HTML += "</tbody></table></div>"
+
+  HTML += "<div class='table'><h2>Lane B</h2><table id='tableB' class='table' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
+  for(i=0; i<laneB.length; i++) {
+    HTML+="<tr><td>"+laneB[i].id+"</td><td>"+laneB[i].age+"</td><td>"+laneB[i].gender+"</td><td><button>delete</button></td></tr>"
+  }
+  HTML += "</tbody></table></div>"
+
+  HTML += "<div class='table'><h2>Car</h2><table id='tableCar' class='table' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
+  for(i=0; i<car.length; i++) {
+    HTML+="<tr><td>"+car[i].id+"</td><td>"+car[i].age+"</td><td>"+car[i].gender+"</td><td><button>delete</button></td></tr>"
+  }
+  HTML += "</tbody></table></div>"
+  document.getElementById("displayPeople").innerHTML = HTML
+  var color = toColor(document.getElementById("laneAStatus").value);
+  document.getElementById('tableA').style="background-color:"+color+";"
+  color = toColor(document.getElementById("laneBStatus").value);
+  document.getElementById('tableB').style="background-color:"+color+";"
+  document.getElementById('tableCar').style="background-color:#AAAAAA;"
+}
+window.onload = function(){
+  displayPeople();
+}
