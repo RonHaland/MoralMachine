@@ -7,10 +7,10 @@ function Person(age, gender, health, status){
   this.sum = function(){
     var sum = 0;
     // Age
-    var value = Math.round((-0.00000015 * Math.pow(this.age, 4))
+    var value = (-0.00000015 * Math.pow(this.age, 4))
       + (0.00002 * Math.pow(this.age, 3))
       - (0.00051 * Math.pow(this.age, 2))
-      - 0.06 * this.age + 5);
+      - 0.06 * this.age + 5;
     if(value < 1)
       value = 1;
     sum += value;
