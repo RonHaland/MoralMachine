@@ -36,6 +36,7 @@ function Person(age, gender, health, status){
     } else {
       sum += 0;
     }
+    sum += 2;
     return sum;
   };
 };
@@ -90,24 +91,24 @@ function chooseLane(){
   if (statusA == 1) { // A is blocked
     totalCar *=0.7;
     if (statusB == 1){ // A and B is blocked
-      console.log("Crashed A");
+      displayResult("Crashed A");
     } else if (totalCar > totalB){    // only A is blocked and car has higher score
-      console.log("Ran over Lane B");
+      displayResult("Ran over Lane B");
     } else {                          // B has higher score
-      console.log("Crashed Lane A");
+      displayResult("Crashed Lane A");
     }
   } else if (statusB == 1) { // B is blocked
-    if (totalCar > totalA){  // Car has higher score
-      console.log("Ran over Lane A");
+    if (totalCar >= totalA){  // Car has higher score
+      displayResult("Ran over Lane A");
     } else {                 // A has higher score
-      console.log("Crashed Lane B");
+      displayResult("Crashed Lane B");
     }
   } else {                  // both lanes open
     totalB *= 1.1;
     if (totalA > totalB) {  // A has higher score
-      console.log("Ran over Lane B");
+      displayResult("Ran over Lane B");
     } else {                // B has higher score
-      console.log("Ran over Lane A");
+      displayResult("Ran over Lane A");
     }
   }
   console.log("Lane A:  " + totalA);
@@ -120,7 +121,7 @@ function toColor(numb){
       return "#AAAAAA";
       break;
     case "1":
-      return "#555555";
+      return "#333";
       break;
     case "2":
       return "#CC0000";
@@ -133,24 +134,38 @@ function toColor(numb){
 
   }
 }
+function deleteitem(id, listNr){
+  var listChoice = [laneA, laneB, car];
+  for(var i=0; i < listChoice[listNr].length; i++){
+    if (listChoice[listNr][i].id == id){
+      listChoice[listNr].splice(i, 1);
+      break;
+    }
+  }
+  displayPeople();
+}
+function displayResult(string){
+  window.alert(string);
+}
+
 
 function displayPeople(){
 
   HTML = "<div class='table'><h2>Lane A</h2><table id='tableA' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
   for(i=0; i<laneA.length; i++) {
-    HTML+="<tr><td>"+laneA[i].id+"</td><td>"+laneA[i].age+"</td><td>"+laneA[i].gender+"</td><td><button>delete</button></td></tr>"
+    HTML+="<tr><td>"+laneA[i].id+"</td><td>"+laneA[i].age+"</td><td>"+laneA[i].gender+"</td><td><button onclick='deleteitem("+laneA[i].id+",0)'>delete</button></td></tr>"
   }
   HTML += "</tbody></table></div>"
 
   HTML += "<div class='table'><h2>Lane B</h2><table id='tableB' class='table' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
   for(i=0; i<laneB.length; i++) {
-    HTML+="<tr><td>"+laneB[i].id+"</td><td>"+laneB[i].age+"</td><td>"+laneB[i].gender+"</td><td><button>delete</button></td></tr>"
+    HTML+="<tr><td>"+laneB[i].id+"</td><td>"+laneB[i].age+"</td><td>"+laneB[i].gender+"</td><td><button onclick='deleteitem("+laneB[i].id+",1)'>delete</button></td></tr>"
   }
   HTML += "</tbody></table></div>"
 
   HTML += "<div class='table'><h2>Car</h2><table id='tableCar' class='table' border='1'><thead><tr><th>ID</th><th>Age</th><th>Gender</th><th></th></thead><tbody>"
   for(i=0; i<car.length; i++) {
-    HTML+="<tr><td>"+car[i].id+"</td><td>"+car[i].age+"</td><td>"+car[i].gender+"</td><td><button>delete</button></td></tr>"
+    HTML+="<tr><td>"+car[i].id+"</td><td>"+car[i].age+"</td><td>"+car[i].gender+"</td><td><button onclick='deleteitem("+car[i].id+",2)'>delete</button></td></tr>"
   }
   HTML += "</tbody></table></div>"
   document.getElementById("displayPeople").innerHTML = HTML

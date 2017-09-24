@@ -1,0 +1,54 @@
+.buttons{
+  clear:left;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  max-width: 300px;
+}
+button{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.table{
+  margin-left: 10px;
+  margin-right: 10px;
+  float:left;
+}
+th{
+  min-width: 67px;
+}
+#formcontainer, #laneOptions{
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 40em;
+  border: 5px solid #777777;
+  border-radius: 10px;
+  padding: 20px 10px 10px 10px;
+  background-color: #CCC;
+}
+h2{
+  margin: auto;
+  text-align: center;
+}
+label{
+  margin-left: 10px;
+}
+#laneOptions{
+  display: flex;
+  flex-direction: row;
+}
+#displayPeople{
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-top: 20px;
+  padding: 20px;
+  border: 5px solid #777777;
+  background-color: #CCC;
+  border-radius: 10px;
+  max-width: 65em;
+  box-sizing: border-box;
+}
